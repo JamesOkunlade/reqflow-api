@@ -35,15 +35,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_184517) do
     t.index ["request_id"], name: "index_approvals_on_request_id"
   end
 
-  create_table "approvals_users", force: :cascade do |t|
-    t.bigint "approval_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["approval_id"], name: "index_approvals_users_on_approval_id"
-    t.index ["user_id"], name: "index_approvals_users_on_user_id"
-  end
-
   create_table "requests", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -57,7 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_184517) do
   create_table "users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.integer "clearance_level", null: false
+    t.integer "clearance_level", default: 1, null: false
     t.string "email", null: false
     t.string "password_digest"
     t.datetime "created_at", null: false
@@ -67,7 +58,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_184517) do
   add_foreign_key "approval_users", "approvals"
   add_foreign_key "approval_users", "users"
   add_foreign_key "approvals", "requests"
-  add_foreign_key "approvals_users", "approvals"
-  add_foreign_key "approvals_users", "users"
   add_foreign_key "requests", "users"
 end
