@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 ruby "3.2.2"
 
+gem 'appmap', :groups => [:development, :test]
+
 gem "rails", "~> 7.1.3", ">= 7.1.3.4"
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
