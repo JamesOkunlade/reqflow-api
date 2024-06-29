@@ -3,7 +3,8 @@ class CreateRequests < ActiveRecord::Migration[7.1]
     create_table :requests do |t|
       t.string :title
       t.text :description
-      t.decimal :amount, precision: 10, scale: 2
+      t.bigint :amount_cents, null: false
+      t.string :status, default: 'pending'
       t.references :user, null: false, foreign_key: true
 
       t.timestamps

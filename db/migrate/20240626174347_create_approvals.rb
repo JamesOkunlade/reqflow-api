@@ -1,7 +1,7 @@
 class CreateApprovals < ActiveRecord::Migration[7.1]
   def change
     create_table :approvals do |t|
-      t.decimal :approved_amount, precision: 10, scale: 2
+      t.bigint :approved_amount_cents, null: false
       t.string :status
       t.datetime :approved_at
       t.datetime :confirmed_at

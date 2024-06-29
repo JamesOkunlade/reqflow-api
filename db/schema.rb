@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_184517) do
   end
 
   create_table "approvals", force: :cascade do |t|
-    t.decimal "approved_amount", precision: 10, scale: 2
+    t.bigint "approved_amount_cents", null: false
     t.string "status"
     t.datetime "approved_at"
     t.datetime "confirmed_at"
@@ -38,7 +38,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_184517) do
   create_table "requests", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.decimal "amount", precision: 10, scale: 2
+    t.bigint "amount_cents", null: false
+    t.string "status", default: "pending"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

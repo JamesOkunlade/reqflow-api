@@ -9,6 +9,10 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 
 gem 'jwt', '~> 2.8', '>= 2.8.2'
+gem 'aasm', '~> 5.5'
+gem 'active_model_serializers', '~> 0.10.14'
+gem 'money-rails', '~> 1.15'
+gem 'pundit', '~> 2.3', '>= 2.3.2'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
@@ -35,6 +39,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
   gem 'rspec-rails', '~> 6.1', '>= 6.1.3'
+  gem 'annotate', '~> 3.2'
 end
 
 group :test do

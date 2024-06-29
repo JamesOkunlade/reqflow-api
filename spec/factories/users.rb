@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint           not null, primary key
+#  clearance_level :integer          default(1), not null
+#  email           :string           not null
+#  first_name      :string           not null
+#  last_name       :string           not null
+#  password_digest :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
 FactoryBot.define do
   factory :user do
     first_name { Faker::Name.first_name }
@@ -5,5 +18,6 @@ FactoryBot.define do
     email { "test@foobar.com" }
     # email { `#{Faker::Name.unique.name}@reqflow.com` }
     password { "foobar" }
+    clearance_level { 1 }
   end
 end
