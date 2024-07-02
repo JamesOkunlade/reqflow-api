@@ -5,7 +5,7 @@
 #  id           :bigint           not null, primary key
 #  amount_cents :bigint           not null
 #  description  :text
-#  status       :string           default("pending")
+#  status       :string           default("requested")
 #  title        :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null

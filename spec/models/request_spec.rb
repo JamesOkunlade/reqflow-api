@@ -5,7 +5,7 @@
 #  id           :bigint           not null, primary key
 #  amount_cents :bigint           not null
 #  description  :text
-#  status       :string           default("pending")
+#  status       :string           default("requested")
 #  title        :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -27,6 +27,6 @@ RSpec.describe Request, type: :model do
   
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:description) }
-    it { should validate_presence_of(:amount) }
+    it { should validate_presence_of(:amount_cents) }
   end
 end

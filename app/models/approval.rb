@@ -23,6 +23,8 @@
 class Approval < ApplicationRecord
   belongs_to :request
   has_many  :approval_users, dependent: :destroy
+  has_many :users, through: :approvals_users
+
 
   include AASM
 
@@ -52,6 +54,23 @@ class Approval < ApplicationRecord
 
     event :pending do
       transitions from: :rejected, to: :pending
+    end
+  end
+
+
+  before_save :set_approved_at, if: :approved?
+  before_save :set_confirmed_at, if: :approved?
+
+  private
+
+  def set_approved_at
+    self.approved_at ||= Time.current
+  end
+
+  def set_confirmed_at
+    if request.approvals.where(status: :approved).count == 3
+      self.confirmed_at = Time.current
+      self.confirmed_by_id = user.id
     end
   end
 end

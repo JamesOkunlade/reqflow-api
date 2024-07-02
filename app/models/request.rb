@@ -5,7 +5,7 @@
 #  id           :bigint           not null, primary key
 #  amount_cents :bigint           not null
 #  description  :text
-#  status       :string           default("pending")
+#  status       :string           default("requested")
 #  title        :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -23,7 +23,7 @@ class Request < ApplicationRecord
   belongs_to :user
   has_many  :approvals
 
-  validates_presence_of :title, :description, :amount
+  validates_presence_of :title, :description, :amount_cents
 
   include AASM
 
@@ -44,7 +44,7 @@ class Request < ApplicationRecord
     end
 
     event :cancel do
-      transitions from: :requested, to: :cancelled
+      transitions from: [:requested, :approval_initiated], to: :cancelled
     end
   end
 
