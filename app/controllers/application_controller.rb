@@ -23,4 +23,8 @@ class ApplicationController < ActionController::API
       raise Pundit::NotAuthorizedError, query: query, record: record, policy: policy
     end
   end
+
+  rescue_from Pundit::NotAuthorizedError do |exception|
+    json_response({ error: exception.message }, :forbidden)
+  end
 end

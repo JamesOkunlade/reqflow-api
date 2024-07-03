@@ -13,7 +13,7 @@ class RequestPolicy < ApplicationPolicy
   end
 
   def update?
-    user.clearance_level > record.user.clearance_level || user == record.user
+    (user.clearance_level > record.user.clearance_level || user == record.user) && record.approvals.none?
   end
 
   def destroy?

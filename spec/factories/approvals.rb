@@ -21,8 +21,8 @@
 #  fk_rails_...  (request_id => requests.id)
 #
 FactoryBot.define do
-  # factory :approval do
-  #   approved_amount {}
-  #   status "pending"
-  # end
+  factory :approval do
+    approved_amount_cents { 300 }
+    status { 'pending' }
+  end
 end

@@ -20,9 +20,10 @@
 #  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
-  # factory :request do
-  #   title { Faker::Lorem.word }
-  #   description { Faker::Lorem.paragraph }
-  #   amount { Faker::Number.within(range: 100..1000) }
-  # end
+  factory :request do
+    title { Faker::Lorem.word }
+    amount_cents { Faker::Number.within(range: 100..1000) }
+    description { Faker::Lorem.paragraph }
+    status { 'requested' }
+  end
 end
