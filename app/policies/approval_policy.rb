@@ -4,13 +4,13 @@ class ApprovalPolicy < ApplicationPolicy
   end
 
   def approve?
-    true
-    # user_has_higher_clearance? && user_has_not_already_approved_request?
+    # true
+    user_has_higher_clearance? && user_has_not_already_approved_request?
   end
 
   def reject?
-    true
-    # user_has_higher_clearance? && user_has_not_already_approved_request?
+    # true
+    user_has_higher_clearance? && user_has_not_already_approved_request?
   end
 
   private

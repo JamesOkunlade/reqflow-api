@@ -10,7 +10,7 @@ module V1
   
     def approve
       authorize @approval
-  
+      
       if @approval.may_approve?
         @approval.transaction do
           @approval.approve!(current_user)
@@ -18,24 +18,25 @@ module V1
           @approval.request.approve! if @approval.request.may_approve?
         end
         json_response(@approval)
-      else
-        json_response({ error: 'Cannot approve' }, :forbidden)
       end
+    rescue Pundit::NotAuthorizedError
+      json_response({ error: 'You are not authorized to approve this request' }, :forbidden)
     end
 
     def reject
       authorize @approval
-  
+    
       if @approval.may_reject?
         @approval.transaction do
           @approval.reject!(current_user)
           @approval.request.reject! if @approval.request.may_reject?
         end
         json_response(@approval)
-      else
-        json_response({ error: 'Cannot reject' }, :forbidden)
       end
+    rescue Pundit::NotAuthorizedError
+      json_response({ error: 'You are not authorized to reject this request' }, :forbidden)
     end
+    
 
     private
 
@@ -45,7 +46,7 @@ module V1
 
     def find_approvals
       scope = Approval.includes(:approval_user, :request)
-      scope = scope.where.not(status: 'pending')
+      scope = scope.initiated
       scope
     end
   end

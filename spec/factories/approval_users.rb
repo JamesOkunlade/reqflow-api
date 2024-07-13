@@ -19,4 +19,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 FactoryBot.define do
+  factory :approval_user do
+    user
+    approval
+  end
 end

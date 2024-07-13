@@ -10,9 +10,6 @@ module V1
 
     def show
       authorize @request
-      # include_options = {}
-      # include_options[:approvals] = { include: :approval_user } if @request.approvals.present?
-      # json_response(@request, include: include_options)
       json_response(@request)
     end
   

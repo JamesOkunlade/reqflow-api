@@ -22,7 +22,8 @@
 #
 FactoryBot.define do
   factory :approval do
-    approved_amount_cents { 300 }
+    request
+    approved_amount_cents { request.amount_cents }
     status { 'pending' }
   end
 end
