@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Approvals", type: :request do
-  describe "GET /index" do
-  end
+RSpec.describe 'Approvals', type: :request do
+  
+
 end

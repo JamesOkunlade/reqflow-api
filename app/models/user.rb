@@ -18,11 +18,20 @@ class User < ApplicationRecord
   has_many :requests
   has_many :approval_users
   has_many :approvals, through: :approval_users
-  # has_many :approvals_users, dependent: :restrict_with_exception
 
-   # validations
-   validates_presence_of :first_name, :last_name, :password_digest
-   validates_presence_of :email, uniqness: true
-   validates :clearance_level, presence: true, inclusion: { in: [1, 2, 3] }
+  # validations
+  validates_presence_of :first_name, :last_name, :password_digest
+  validates_presence_of :email, uniqness: true
+  validates :clearance_level, presence: true, inclusion: { in: [1, 2, 3] }
 
+
+  def sanitized_user_data
+    {
+      id: id,
+      first_name: first_name,
+      last_name: last_name,
+      clearance_level: clearance_level,
+      email: email
+    }
+  end
 end

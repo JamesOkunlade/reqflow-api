@@ -98,8 +98,8 @@ RSpec.describe 'Requests', type: :request do
       end
     end
 
-    context 'when the record exists but there is already an approval on it' do
-      let!(:approval) { create(:approval, request_id: request_id) }
+    context 'when the record exists but there is already an approval with status approved on it' do
+      let!(:approval) { create(:approval, request_id: request_id, status: 'approved') }
       before { put "/requests/#{request_id}", params: valid_attributes, headers: headers }
 
       it 'returns NotAuthorizedError' do
@@ -107,7 +107,20 @@ RSpec.describe 'Requests', type: :request do
       end
 
       it 'returns a not authorized message' do
-        expect(json['error']).to eq('not allowed to update? this Request')
+        expect(json['error']).to eq('Request cannot be updated after approval')
+      end
+    end
+    
+    context 'when the record exists but there is already an approval with status not approved or rejected' do
+      let!(:approval) { create(:approval, request_id: request_id) }
+      before { put "/requests/#{request_id}", params: valid_attributes, headers: headers }
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'updates the record' do
+        expect(json['amount_cents']).to eq(500)
       end
     end
   end
@@ -122,7 +135,7 @@ RSpec.describe 'Requests', type: :request do
     end
 
     context 'when record exists but there is already an approval on it' do
-      let!(:approval) { create(:approval, request_id: request_id) }
+      let!(:approval) { create(:approval, request_id: request_id, status: 'approved') }
       before { delete "/requests/#{request_id}", params: {}, headers: headers }
 
       it 'returns NotAuthorizedError' do
@@ -130,12 +143,17 @@ RSpec.describe 'Requests', type: :request do
       end
 
       it 'returns a not authorized message' do
-        expect(json['error']).to eq('not allowed to destroy? this Request')
+        expect(json['error']).to eq('Request cannot be deleted after approval')
+      end
+    end
+   
+    context 'when the record exists but there is already an approval with status not approved or rejected' do
+      let!(:approval) { create(:approval, request_id: request_id) }
+      before { delete "/requests/#{request_id}", params: {}, headers: headers }
+
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
       end
     end
   end
-
-
-
-
 end

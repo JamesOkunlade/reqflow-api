@@ -3,34 +3,23 @@ class ApprovalPolicy < ApplicationPolicy
     true
   end
 
-  def show?
-    true
-  end
-
   def approve?
-    user_has_higher_clearance?
+    true
+    # user_has_higher_clearance? && user_has_not_already_approved_request?
   end
 
   def reject?
-    user_has_higher_clearance?
-  end
-
-  def undo_confirm?
-    user_has_higher_clearance?
-  end
-
-  def cancel?
-    user_has_higher_clearance?
-  end
-
-  def permitted_attributes_for(action) # Cancel action doesn't need as many
-    [:status, :comment, :confirmed_by_id, :confirmed_at] 
-      if %i[approve reject undo_confirm cancel].include?(action)
+    true
+    # user_has_higher_clearance? && user_has_not_already_approved_request?
   end
 
   private
 
   def user_has_higher_clearance?
     user.clearance_level > record.request.user.clearance_level
+  end
+
+  def user_has_not_already_approved_request?
+    !record.request.approvals.joins(:approval_user).where(approval_users: { user_id: user.id }).exists?
   end
 end

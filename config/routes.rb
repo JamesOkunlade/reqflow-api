@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   # namespace the controllers without affecting the URI
   scope module: :v1, constraints: ApiVersion.new('v1', true) do
     resources :requests
-    resources :approvals
+    resources :approvals, only: :index do
+      member do
+        post 'approve'
+        post 'reject'
+      end
+    end
   end
 
   post 'auth/login', to: 'authentication#authenticate'
