@@ -19,9 +19,8 @@ class User < ApplicationRecord
   has_many :approval_users
   has_many :approvals, through: :approval_users
 
-  # validations
-  validates_presence_of :first_name, :last_name, :password_digest
-  validates_presence_of :email, uniqness: true
+  validates :first_name, :last_name, :password_digest, presence: true
+  validates :email, presence: true, uniqueness: true
   validates :clearance_level, presence: true, inclusion: { in: [1, 2, 3] }
 
 

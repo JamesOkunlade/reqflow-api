@@ -24,10 +24,8 @@ class Request < ApplicationRecord
   has_many  :approvals, dependent: :destroy
   has_one :pending_approval, -> { where(status: "pending") }, class_name: "Approval"
 
-  validates_presence_of :title, :description, :amount_cents
-  validates :amount_cents,  numericality: { greater_than: 0 }, allow_nil: true
-
-  default_scope { order(updated_at: :desc) }
+  validates :title, :description, :amount_cents, presence: true
+  validates :amount_cents, numericality: { greater_than: 0 }, allow_nil: true
 
   include AASM
 
@@ -50,14 +48,6 @@ class Request < ApplicationRecord
 
   def create_next_approval
     approvals.create!(approved_amount_cents: amount_cents)
-  end
-  
-  def possible_actions
-    {
-      may_initiate_approval: may_initiate_approval?,
-      may_approve: may_approve?,
-      may_cancel: may_cancel?,
-    }
   end
 
   private

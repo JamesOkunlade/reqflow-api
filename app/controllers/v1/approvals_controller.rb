@@ -12,7 +12,7 @@ module V1
       authorize @approval
       
       if @approval.may_approve?
-        @approval.transaction do
+        ActiveRecord::Base.transaction do
           @approval.approve!(current_user)
           @approval.request.initiate_approval! if @approval.request.may_initiate_approval?
           @approval.request.approve! if @approval.request.may_approve?
@@ -27,7 +27,7 @@ module V1
       authorize @approval
     
       if @approval.may_reject?
-        @approval.transaction do
+        ActiveRecord::Base.transaction do
           @approval.reject!(current_user)
           @approval.request.reject! if @approval.request.may_reject?
         end
@@ -41,13 +41,11 @@ module V1
     private
 
     def set_approval
-      @approval = Approval.find(params[:id])
+      @approval = Approval.includes(:approval_user, request: :user).find(params[:id])
     end
 
     def find_approvals
-      scope = Approval.includes(:approval_user, :request)
-      scope = scope.initiated
-      scope
+      Approval.includes(:approval_user, :request).initiated
     end
   end
 end

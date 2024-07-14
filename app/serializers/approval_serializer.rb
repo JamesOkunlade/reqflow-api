@@ -8,8 +8,6 @@ class ApprovalSerializer < ActiveModel::Serializer
   class RequestSerializer < ActiveModel::Serializer
     attributes :id, :title, :status, :sanitized_user
 
-    # belongs_to :user, serializer: UserSerializer
-
     def sanitized_user
       object.user.sanitized_user_data if object.user
     end
