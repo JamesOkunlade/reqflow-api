@@ -6,10 +6,8 @@ class ApprovalSerializer < ActiveModel::Serializer
 
 
   class RequestSerializer < ActiveModel::Serializer
-    attributes :id, :title, :status, :sanitized_user
+    attributes :id, :title, :status, :user
 
-    def sanitized_user
-      object.user.sanitized_user_data if object.user
-    end
+    belongs_to :user
   end
 end

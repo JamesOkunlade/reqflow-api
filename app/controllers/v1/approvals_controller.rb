@@ -45,7 +45,7 @@ module V1
     end
 
     def find_approvals
-      Approval.includes(:approval_user, :request).initiated
+      Approval.includes(approval_user: :user, request: :user).initiated
     end
   end
 end
