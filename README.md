@@ -1,7 +1,4 @@
-When it became apparent I would be proceeding with the finance squad I tasked myself with thinking of a simple solution I could use to describe an idea of my level of mastery of a few of the required skills. 
-
-
-This is ## ReqFlow.  A simple request and approval tool.
+## ReqFlow.  A simple request and approval tool.
 
 ### Overview
 
