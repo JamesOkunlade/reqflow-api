@@ -22,7 +22,7 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :password_digest, presence: true
   validates :email, presence: true, uniqueness: true
   validates :clearance_level, presence: true, inclusion: { in: [1, 2, 3] }
-
+ 
 
   def sanitized_user_data
     {
@@ -34,3 +34,4 @@ class User < ApplicationRecord
     }
   end
 end
+
