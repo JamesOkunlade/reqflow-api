@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+# Remove a potentially pre-existing server.pid for Rails.
+rm -f /rails/tmp/pids/server.pid
+
+# Check for pending migrations and run them if needed
+if bundle exec rails db:migrate:status | grep -q 'down'; then
+  bundle exec rails db:migrate
+fi
+
+# Execute the container's main process (what's set as CMD in the Dockerfile).
+exec "$@"

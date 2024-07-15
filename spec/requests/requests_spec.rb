@@ -6,9 +6,7 @@ RSpec.describe 'Requests', type: :request do
   let!(:user1_requests) { create_list(:request, 5, user_id: user.id) }
   let!(:user2_requests) { create_list(:request, 5, user_id: user2.id) }
   let(:request_id) { user1_requests.first.id }
-
   let(:headers) { valid_headers(user) }
-
 
   describe 'GET /requests index action' do
     before { get '/requests', params: {}, headers: headers }
@@ -99,7 +97,7 @@ RSpec.describe 'Requests', type: :request do
     end
 
     context 'when the record exists but there is already an approval with status approved on it' do
-      let!(:approval) { create(:approval, request_id: request_id, status: 'approved') }
+      let!(:approval) { create(:approval, request: user1_requests.first, status: 'approved') }
       before { put "/requests/#{request_id}", params: valid_attributes, headers: headers }
 
       it 'returns NotAuthorizedError' do
@@ -112,7 +110,7 @@ RSpec.describe 'Requests', type: :request do
     end
     
     context 'when the record exists but there is already an approval with status not approved or rejected' do
-      let!(:approval) { create(:approval, request_id: request_id) }
+      let!(:approval) { create(:approval, request: user1_requests.first) }
       before { put "/requests/#{request_id}", params: valid_attributes, headers: headers }
 
       it 'returns status code 200' do
@@ -135,7 +133,7 @@ RSpec.describe 'Requests', type: :request do
     end
 
     context 'when record exists but there is already an approval on it' do
-      let!(:approval) { create(:approval, request_id: request_id, status: 'approved') }
+      let!(:approval) { create(:approval, request: user1_requests.first, status: 'approved') }
       before { delete "/requests/#{request_id}", params: {}, headers: headers }
 
       it 'returns NotAuthorizedError' do
@@ -148,7 +146,7 @@ RSpec.describe 'Requests', type: :request do
     end
    
     context 'when the record exists but there is already an approval with status not approved or rejected' do
-      let!(:approval) { create(:approval, request_id: request_id) }
+      let!(:approval) { create(:approval, request: user1_requests.first) }
       before { delete "/requests/#{request_id}", params: {}, headers: headers }
 
       it 'returns status code 204' do

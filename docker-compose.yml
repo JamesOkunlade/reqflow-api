@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: reqflow_api_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    networks:
+      - app-network
+
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bin/rails s -b '0.0.0.0'"
+    volumes:
+      - .:/rails
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/reqflow_api_development
+      RAILS_ENV: development
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

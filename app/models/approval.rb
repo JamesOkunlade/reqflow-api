@@ -62,6 +62,8 @@ class Approval < ApplicationRecord
   private
 
   def check_for_next_approval
-    request.create_next_approval if request.approvals.where(status: 'approved').count < 3 && request.aasm.current_state == 'approval_initiated'
+    if request.approvals.where(status: 'approved').count < 3 && request.aasm.current_state == 'approval_initiated'
+      request.create_next_approval
+    end
   end
 end

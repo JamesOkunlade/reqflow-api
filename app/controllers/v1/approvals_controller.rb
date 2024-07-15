@@ -10,43 +10,42 @@ module V1
   
     def approve
       authorize @approval
-  
+      
       if @approval.may_approve?
-        @approval.transaction do
+        ActiveRecord::Base.transaction do
           @approval.approve!(current_user)
           @approval.request.initiate_approval! if @approval.request.may_initiate_approval?
           @approval.request.approve! if @approval.request.may_approve?
         end
         json_response(@approval)
-      else
-        json_response({ error: 'Cannot approve' }, :forbidden)
       end
+    rescue Pundit::NotAuthorizedError
+      json_response({ error: 'You are not authorized to approve this request' }, :forbidden)
     end
 
     def reject
       authorize @approval
-  
+    
       if @approval.may_reject?
-        @approval.transaction do
+        ActiveRecord::Base.transaction do
           @approval.reject!(current_user)
           @approval.request.reject! if @approval.request.may_reject?
         end
         json_response(@approval)
-      else
-        json_response({ error: 'Cannot reject' }, :forbidden)
       end
+    rescue Pundit::NotAuthorizedError
+      json_response({ error: 'You are not authorized to reject this request' }, :forbidden)
     end
+    
 
     private
 
     def set_approval
-      @approval = Approval.find(params[:id])
+      @approval = Approval.includes(:approval_user, request: :user).find(params[:id])
     end
 
     def find_approvals
-      scope = Approval.includes(:approval_user, :request)
-      scope = scope.where.not(status: 'pending')
-      scope
+      Approval.includes(approval_user: :user, request: :user).initiated
     end
   end
 end

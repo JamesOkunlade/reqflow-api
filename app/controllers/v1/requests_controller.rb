@@ -10,9 +10,6 @@ module V1
 
     def show
       authorize @request
-      # include_options = {}
-      # include_options[:approvals] = { include: :approval_user } if @request.approvals.present?
-      # json_response(@request, include: include_options)
       json_response(@request)
     end
   
@@ -46,24 +43,15 @@ module V1
     private
   
     def set_request
-      @request = Request.find(params[:id])
+      @request = Request.includes(approvals: :user, approvals: { approval_user: :user }).find(params[:id])
     end
   
     def request_params
       params.require(:request).permit(:title, :amount_cents, :description)
     end
 
-    def preload_relations
-      [
-        approvals: [
-          :approval_user
-        ]
-      ]
-    end
-
     def find_requests
-      scope = Request.includes(preload_relations)
-      scope
+      Request.includes(approvals: { approval_user: :user }).order(updated_at: :desc)
     end
   end
 end
