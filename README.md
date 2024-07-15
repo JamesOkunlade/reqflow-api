@@ -18,6 +18,7 @@ docker-compose up --build
 3. Start the development server: `rails db:migrate`
 3. Start the development server: `rails s`
 4. The app will be running on `http://localhost:3000`
+5. `bundle exec rspec` will run the specs
 
 ### Features
 
