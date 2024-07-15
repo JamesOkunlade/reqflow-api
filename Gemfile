@@ -13,16 +13,6 @@ gem 'aasm', '~> 5.5'
 gem 'active_model_serializers', '~> 0.10.14'
 gem 'money-rails', '~> 1.15'
 gem 'pundit', '~> 2.3', '>= 2.3.2'
-
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-# gem "jbuilder"
-
-# Use Redis adapter to run Action Cable in production
-# gem "redis", ">= 4.0.1"
-
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
-
 gem "bcrypt", "~> 3.1.7"
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -30,6 +20,8 @@ gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
+gem 'rack', '~> 2.2.4'
+
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem "rack-cors"
