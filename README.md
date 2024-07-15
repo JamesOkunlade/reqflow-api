@@ -20,6 +20,14 @@ docker-compose up --build
 4. The app will be running on `http://localhost:3000`
 5. `bundle exec rspec` will run the specs
 
+### Setting clearance levels of users
+
+Every User is assigned clearance level 1 by default. To upgrade a user clearance level do that from the rails console
+
+```
+User.find(<id of user>).update(clearance_level: <2 or 3>)
+```
+
 ### Features
 
 - **User Management**: Users can log in, view profiles, and manage requests.
