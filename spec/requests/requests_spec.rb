@@ -47,11 +47,6 @@ RSpec.describe 'Requests', type: :request do
         expect(response.body).to match(/Couldn't find Request/)
       end
     end
-
-    # Update specs for for more contexts
-
-    # context 'when record exists and also have an approval' do
-    # end
   end
 
   describe 'POST /requests create action' do

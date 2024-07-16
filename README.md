@@ -20,6 +20,20 @@ docker-compose up --build
 4. The app will be running on `http://localhost:3000`
 5. `bundle exec rspec` will run the specs
 
+### Setting Up the Master Key
+
+To work with the application, you need to set up the Rails master key.
+
+1. Obtain the `config/master.key` from a project maintainer via a secure method.
+2. Place the `master.key` file in the `config` directory.
+
+Alternatively, you can set the `RAILS_MASTER_KEY` environment variable:
+
+**Unix-based Systems (Linux/macOS)**:
+```bash
+export RAILS_MASTER_KEY=your-master-key-content
+```
+
 ### Setting clearance levels of users
 
 Every User is assigned clearance level 1 by default. To upgrade a user clearance level do that from the rails console

@@ -7,7 +7,6 @@ RSpec.describe 'Users API', type: :request do
     attributes_for(:user, password_confirmation: user.password)
   end
 
-  
   # User signup test suite
   describe 'POST /signup' do
     context 'when valid request' do
@@ -17,7 +16,6 @@ RSpec.describe 'Users API', type: :request do
         expect(response).to have_http_status(201)
       end
 
-
       it 'returns an authentication token' do
         expect(json['auth_token']).not_to be_nil
       end
@@ -25,7 +23,6 @@ RSpec.describe 'Users API', type: :request do
 
     context 'when invalid request' do
       before { post '/signup', params: { user: attributes_for(:user, email: nil) }.to_json, headers: headers }
-
 
       it 'does not create a new user' do
         expect(response).to have_http_status(422)
