@@ -4,6 +4,8 @@
 
 The idea is simple, a user can make a request of an amount for anything and when three other users with a higher clearance level than the requester approve, the requested amount is released in form of a preloaded virtual card (this part has not been implemented yet). The focus of this project is not on the validity of the idea but on the technical tools and choices and also an atempt to describe the barest minimum in terms of proactiveness, requirements definition, ownership, autonomy and good soft communication skills which are all necessary for the role of a product-minded senior engineer.
 
+The React and Redux frontend of this api can be found at https://github.com/JamesOkunlade/reqflow
+
 ### Docker installation
 
 ```
