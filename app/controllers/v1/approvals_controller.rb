@@ -3,8 +3,8 @@ module V1
     before_action :set_approval, only: [:approve, :reject]
 
     def index
-      @approvals = find_approvals
       authorize @approvals
+      @approvals = find_approvals
       json_response(@approvals)
     end
   

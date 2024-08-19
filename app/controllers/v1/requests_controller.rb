@@ -3,8 +3,8 @@ module V1
     before_action :set_request, only: [:show, :update, :destroy]
 
     def index
-      @requests = find_requests
       authorize @requests
+      @requests = find_requests
       json_response(@requests)
     end
 
@@ -14,8 +14,8 @@ module V1
     end
   
     def create
-      @request = current_user.requests.new(request_params)
       authorize @request
+      @request = current_user.requests.new(request_params)
 
       ActiveRecord::Base.transaction do
         @request.save!
